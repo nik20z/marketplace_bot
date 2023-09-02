@@ -5,7 +5,7 @@ from typing import KeysView
 from bot.database.connect import cursor, connection
 
 
-extensions_create_names = ('pg_trgm',)
+extensions_create_names = ()
 
 table_create_queries = {
     "store": """
