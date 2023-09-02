@@ -44,12 +44,19 @@ table_create_queries = {
                     FOREIGN KEY (category_id) REFERENCES category (category_id),
                     FOREIGN KEY (manufacturer_id) REFERENCES manufacturer (manufacturer_id));""",
 
+
+    "product_image": """
+        CREATE TABLE IF NOT EXISTS product_image (
+                    image_id int PRIMARY KEY,
+                    product_id bigint,
+                    FOREIGN KEY (product_id) REFERENCES product (product_id));""",
+
     "price_change": """
         CREATE TABLE IF NOT EXISTS price_change (
                     product_id bigserial,
                     date_price_change timestamp with time zone NOT NULL,
                     new_price numeric(12, 2) NOT NULL,
-                    CONSTRAINT POSITIVE_PRICE CHECK (new_price > 0)),
+                    CONSTRAINT POSITIVE_PRICE CHECK (new_price > 0),
                     FOREIGN KEY (product_id) REFERENCES product (product_id));""",
 
     "delivery": """
@@ -66,7 +73,7 @@ table_create_queries = {
                     user_id bigint,
                     store_id smallint,
                     purchase_date timestamp without time zone NOT NULL,
-                    payment_status boolean DEFAULT False,
+                    payment_status boolean NOT NULL DEFAULT False,
                     CONSTRAINT PK_PURCHASE PRIMARY KEY (purchase_id),
                     FOREIGN KEY (user_id) REFERENCES telegram (user_id),
                     FOREIGN KEY (store_id) REFERENCES store (store_id));""",
@@ -75,7 +82,7 @@ table_create_queries = {
         CREATE TABLE IF NOT EXISTS purchase_item (
                     purchase_id bigint,
                     product_id bigint,
-                    product_count integer NOT NULL,
+                    product_count integer NOT NULL DEFAULT 1,
                     product_price NUMERIC(12,2) NOT NULL,
                     CONSTRAINT PK_PURCHASE_ITEM PRIMARY KEY (purchase_id, product_id),
                     CONSTRAINT POSITIVE_COUNT CHECK (product_count > 0),
@@ -87,7 +94,7 @@ table_create_queries = {
         CREATE TABLE IF NOT EXISTS cart_item (
                     user_id bigint,
                     product_id bigint,
-                    product_count integer NOT NULL,
+                    product_count integer NOT NULL DEFAULT 1,
                     product_selected boolean NOT NULL DEFAULT True,
                     CONSTRAINT PK_CART_ITEM PRIMARY KEY (user_id, product_id),
                     CONSTRAINT POSITIVE_COUNT CHECK (product_count > 0),

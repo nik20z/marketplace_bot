@@ -312,7 +312,7 @@ def view_product_item_in_cart(product_item_in_cart_data: list) -> InlineKeyboard
     total_price = number_in_cart * product_price
 
     product_price_btn = InlineKeyboardButton(text=f"{product_price} ₽", callback_data="product_price")
-    count_product_btn = InlineKeyboardButton(text=number_in_cart, callback_data="number_product")
+    count_product_btn = InlineKeyboardButton(text=str(number_in_cart), callback_data="number_product")
     total_price_btn = InlineKeyboardButton(text=f"{total_price} ₽",
                                            callback_data=OtherCallback(action="view", value="Итоговая сумма").pack())
     minus_btn = InlineKeyboardButton(text="➖",
@@ -356,7 +356,7 @@ def ordering(purchase_id: int) -> InlineKeyboardMarkup:
     """Оформление заказа"""
     builder = InlineKeyboardBuilder()
 
-    payment_time = (datetime.now().replace(tzinfo=None) - datetime.fromtimestamp(0)).total_seconds()
+    payment_time = int((datetime.now().replace(tzinfo=None) - datetime.fromtimestamp(0)).total_seconds())
 
     builder.button(text="Оплатить", callback_data=OrderingCartCallback(payment=True,
                                                                        purchase_id=purchase_id,

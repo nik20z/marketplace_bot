@@ -3,7 +3,6 @@ import asyncio
 from aiogram import F
 from aiogram import Router
 from aiogram.methods import DeleteMessage
-from aiogram.filters import Text
 from aiogram.filters import Command
 from aiogram.types import Update
 from aiogram.types import Message
@@ -74,7 +73,7 @@ async def new_user(message: Message) -> None:
 
 # ____________________ PERSONAL AREA ____________________
 
-@router.message(Text(text="личный кабинет", ignore_case=True))
+@router.message(F.text.lower() == "личный кабинет")
 async def personal_area(message: Message, edit_message: bool = False) -> None:
     """Личный кабинет"""
     user_id = message.chat.id
@@ -88,7 +87,7 @@ async def personal_area(message: Message, edit_message: bool = False) -> None:
 
     else:
         await message.answer(text, reply_markup=keyboard)
-        await DeleteMessage(chat_id=user_id, message_id=user_message_id)
+        # await DeleteMessage(chat_id=user_id, message_id=user_message_id)
 
 
 @router.callback_query(PersonalAreaCallback.filter(F.view_purchases))
@@ -333,7 +332,7 @@ async def payment(callback: CallbackQuery, callback_data: OrderingCartCallback) 
 
 # ____________________ CATALOG ____________________
 
-@router.message(Text(text="каталог", ignore_case=True))
+@router.message(F.text.lower() == "каталог")
 async def view_categories(message: Message, edit_message: bool = False) -> None:
     """Вывести список категорий"""
     user_id = message.chat.id
@@ -349,7 +348,7 @@ async def view_categories(message: Message, edit_message: bool = False) -> None:
 
     else:
         await message.answer(text, reply_markup=keyboard)
-        await DeleteMessage(chat_id=user_id, message_id=user_message_id)
+        # await DeleteMessage(chat_id=user_id, message_id=user_message_id)
 
 
 @router.callback_query(CatalogCallback.filter(~F.category_id))

@@ -36,7 +36,7 @@ class PersonalAreaCallback(CallbackData, prefix="pac"):
 
 
 class OrderingCartCallback(CallbackData, prefix="opc"):
-    """Взаимождействие с корзиной"""
+    """Взаимодействие с корзиной"""
     product_id: int = 0  # id товара, с которым происходит взаимодействие
 
     product_selected: bool = False  # Отметить товар в корзине

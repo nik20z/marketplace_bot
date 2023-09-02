@@ -13,4 +13,3 @@ def get_coordinate_button_by_callback_data(keyboard, callback_data_value: str) -
         btn_ind = 0
 
     return [0, 0]
-
